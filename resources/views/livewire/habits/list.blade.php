@@ -63,6 +63,7 @@ new class extends Component {
         $this->list = null;
         $this->getHabits();
     }
+
 }; ?>
 
 <div class="mt-6 bg-white shadow-sm rounded-lg divide-y dark:bg-gray-700 dark:text-white">
@@ -73,12 +74,8 @@ new class extends Component {
             </svg>
             <div class="flex-1">
                 <div class="flex justify-between items-center">
-                    <div>
+                    <div class="flex">
                         <span class="text-gray-800 dark:text-gray-200">{{ $habit->name }}</span>
-                        <small class="ml-2 text-sm text-gray-600 dark:text-gray-400">{{ $habit->created_at->format('j M Y, g:i a') }}</small>
-                        @unless ($habit->created_at->eq($habit->updated_at))
-                            <small class="text-sm text-gray-600"> &middot; {{ __('edited') }}</small>
-                        @endunless
                     </div>
                     <div>
                         @if(!$editing && !$list)

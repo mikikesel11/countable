@@ -16,9 +16,6 @@ new class extends Component {
     #[Validate('required|date', message: 'Tracked for Date Required')]
     public $tracked_for_date;
 
-    #[Validate('required|int|min:0')]
-    public $streak = 0;
-
     public $finalized = null;
     public $final = false;
     public $check = false;
@@ -26,7 +23,6 @@ new class extends Component {
     public function mount(Habit $habit): void
     {
         $this->habit = $habit;
-        $this->streak = $this->habit->current_streak;
         $this->tracked_for_date = today()->format('Y-m-d');
         $this->getCount();
     }
@@ -35,82 +31,78 @@ new class extends Component {
     {
         $isYesterday = Carbon::yesterday()->format('Y-m-d');
         $today = today()->format('Y-m-d');
-        $notFinalCount = Count::where('user_id', auth()->user()->id)
+        $lastCount = Count::where('user_id', auth()->user()->id)
             ->where('habit_name', $this->habit->name)
             ->where('habit_id', $this->habit->id)
-            ->whereNull('finalized')
             ->latest()
-            ->first();     
-        if($notFinalCount && $notFinalCount->tracked_for_date === $today) {
-            $this->count = $notFinalCount;
-            $this->current_count = $notFinalCount->current_count;
-            $this->tracked_for_date = $notFinalCount->tracked_for_date;
-            $this->streak = $notFinalCount->streak;
+            ->first();
+        if($lastCount && $lastCount->tracked_for_date === $today && $lastCount->finalized === null)
+        {
+            $this->count = $lastCount;
+            $this->current_count = $lastCount->current_count;
+            $this->tracked_for_date = $lastCount->tracked_for_date;
+            if($this->habit->type === "CHECK" && $this->current_count > 0)
+            {
+                $this->check = true;
+            }
             return;
         } 
-        elseif($notFinalCount && $notFinalCount->tracked_for_date === $isYesterday) 
+        elseif($lastCount &&  $lastCount->tracked_for_date === $isYesterday && $lastCount->finalized === null)
         {
-            $this->authorize('update', $notFinalCount);
+            $this->authorize('update', $lastCount);
             $update = array();
             $update['finalized'] = now();
-            $notFinalCount->update($update);
-            $this->streak = $notFinalCount->streak + 1;
+            $lastCount->update($update);
+            $this->streak = $lastCount->streak + 1;
         }
-        else 
+        elseif($lastCount && $lastCount->tracked_for_date === $today)
         {
-            $streakSet = Count::where('user_id', auth()->user()->id)
-                ->where('habit_id', $this->habit->id)
-                ->whereNotNull('finalized')
-                ->latest()
-                ->first();
-            if($streakSet) {
-                if($streakSet->tracked_for_date === $isYesterday){
-                    $this->streak = $streakSet->streak + 1;
-                }
-            } 
-        }
+            $this->authorize('update', $lastCount);
+            $update = array();
+            $update['current_count'] = $lastCount->current_count + $this->current_count;
+            $lastCount->update($update);
+            $this->count = $lastCount;
+            $this->tracked_for_date = $lastCount->tracked_for_date;
+            $this->current_count = $lastCount->current_count;
+            $this->finalized = $lastCount->finalized;
+            if($this->habit->type === "CHECK" && $this->current_count > 0)
+            {
+                $this->check = true;
+            }
+            if($lastCount->finalized !== null)
+            {
+                $this->final = true;
+            }
+            return;
+        } 
         $newCount = Count::create([
                 'user_id' => $this->habit->user_id,
                 'habit_id' => $this->habit->id,
                 'habit_name' => $this->habit->name,
                 'tracked_for_date' => $this->tracked_for_date,
-                'streak' => $this->streak,
                 'current_count' => 0,
                 'finalized' => null,
             ]);
         $this->count = $newCount;
         $this->current_count = $newCount->current_count;
         $this->tracked_for_date = $newCount->tracked_for_date;
-        $this->streak = $newCount->streak;
     }
 
     public function update(): void
     {
         $this->authorize('update', $this->count);
-        if($this->final && !$this->check) {
+        if($this->final && !$this->check && $this->count->finalized === null) {
             $this->finalized = now();
-            if($this->current_count > 0) {
-                $this->streak = $this->habit->current_streak + 1;   
-            }
         }
-        if($this->check) {
+        if($this->check && $this->count->finalized === null) {
             $this->finalized = now();
             $this->current_count = 1;
-            $this->streak = $this->habit->current_streak + 1;
         } 
         $validated = $this->validate();
         $validated['habit_id'] = $this->habit->id;
         $validated['habit_name'] = $this->habit->name;
-        unset($validated['check']);
-        unset($validated['final']);
 
         $this->count->updateOrFail($validated);
-
-        if($this->streak > $this->habit->current_streak) 
-        {
-            $this->authorize('update', $this->habit);
-            $this->habit->updateOrFail(['current_streak' => $this->streak]);
-        }
 
         $this->dispatch('count-edit');
     }
@@ -124,7 +116,7 @@ new class extends Component {
                 <input type="number" wire:model.number="current_count" class="mx-4 py-auto dark:bg-gray-800 dark:text-white" aria-label="Current Count" id="current_count" name="current_count"/>
                 <x-input-error :messages="$errors->get('current_count')" class="mx-2 dark:bg-gray-800 dark:text-white" />
                 @elseIf($this->habit->type === 'CHECK')
-                <input type="checkbox" id="check" name="check" wire:model.boolean="check" wire.confirm="Are you sure you want to consider this Count Completed?" class="appearance-none mt-1 checked:bg-violet-800 dark:bg-gray-800 dark:text-white" />
+                <input type="checkbox" id="check" name="check" wire:model.boolean="check" class="mt-1 checked:bg-violet-800 dark:bg-gray-800 dark:text-white" />
                 <label for="check" class="px-2 dark:text-white">Complete</label>
                 <x-input-error :messages="$errors->get('check')" class="mx-2 dark:bg-gray-800 dark:text-white" />
                 @endif
@@ -135,7 +127,7 @@ new class extends Component {
             </div>
             @if($habit->type === "NUMBER")
             <div class="flex">
-                <input type="checkbox" wire:model.boolean="final" id="final" name="final" wire.confirm="Are you sure you want to Finalize this Count?" class="mt-1 dark:bg-gray-800 dark:text-white" />
+                <input type="checkbox" wire:model.boolean="final" id="final" name="final" class="mt-1 dark:bg-gray-800 dark:text-white" />
                 <label for="final" class="px-2 dark:text-white">Finalize</label>
             </div>
             <div class="flex">

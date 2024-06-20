@@ -45,12 +45,9 @@ new class extends Component {
 
     #[On('count-edit-canceled')]
     #[On('count-updated')] 
-    public function disableEditing($message = null): void
+    public function disableEditing(): void
     {
         $this->editing = null;
-        if($message) {
-            session()->flash(print_r($message));
-        }
         $this->getCounts();
     }
     
@@ -104,14 +101,16 @@ new class extends Component {
                             </x-dropdown>
                         </div>
                         @endif
-
-                    </div>  
-                    <div>
-                        <span class="text-white-800">Current Count: {{ $count->current_count }}</span>
                     </div>    
                     <div>
-                        <span class="ml-2 text-white-600">Current Streak: {{ $count->streak }}</span>
-                    </div>  
+                        @if($this->habit->type === "NUMBER")
+                        <span class="ml-2 text-white-600">{{ $count->current_count }}</span>
+                        @elseif($this->habit->type === "CHECK" && $count->current_count > 0)
+                        <span class="ml-2 text-white-600">Completed</span>
+                        @elseif($this->habit->type === "CHECK" && $count->current_count === 0)
+                        <span class="ml-2 text-white-600">Incomplete</span>
+                        @endif
+                    </div>
                 </div>
                 @if ($count->is($editing)) 
                     <livewire:counts.edit :count="$count" :key="$count->id" :habit="$habit"/>

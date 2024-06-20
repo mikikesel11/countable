@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreignId('habit_id')->constrained()->cascadeOnDelete();
             $table->text('habit_name');
             $table->integer('current_count');
-            $table->integer('streak')->default(0);
             $table->timestamp('finalized')->nullable();
             $table->date('tracked_for_date');
             $table->timestamps();

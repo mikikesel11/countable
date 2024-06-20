@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->enum('type', ['CHECK', 'NUMBER']);
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->integer('current_streak')->default(0);
-            $table->integer('longest_streak')->default(0);
+            $table->foreignId('current_streak_id')->constrained()->cascadeOnDelete()->nullable()->default(null);
+            $table->foreignId('longest_streak_id')->constrained()->cascadeOnDelete()->nullable()->default(null);
             $table->boolean('active')->default(1);
             $table->timestamps();
         });
