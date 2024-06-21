@@ -15,7 +15,7 @@ new class extends Component {
     #[Validate('required|date', message: 'Tracked for Date Required')]
     public $tracked_for_date;
 
-    public $final;
+    public $final = false;
     public $finalized;
     public $check = false;
 
@@ -25,7 +25,10 @@ new class extends Component {
         $this->current_count = $this->count->current_count;
         $this->tracked_for_date = $this->count->tracked_for_date;
         $this->finalized = $this->count->finalized;
-        $this->final = $this->finalized ? true:false;
+        if($this->count->finalized) 
+        {
+            $this->final = true;
+        }
         if($this->habit->type === "CHECK") {
             if($this->current_count > 0) {
                 $this->check = true;
@@ -61,6 +64,7 @@ new class extends Component {
 <div class="my-6 bg-white shadow-sm rounded-lg divide-y dark:bg-gray-700 dark:text-white">
     <div class="flex-col py-2 basis-1/2 mx-auto my-auto">
         <form class="flex flex-col space-y-2" wire:submit="update" wire:key="{{$count->id}}">
+            @csrf
             <div class="flex">
                 @if($this->habit->type === 'NUMBER')
                 <input type="number" wire:model.number="current_count" class="mx-4 py-auto dark:bg-gray-800 dark:text-white" aria-label="Current Count" id="current_count" name="current_count"/>

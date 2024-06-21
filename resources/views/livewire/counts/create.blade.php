@@ -68,6 +68,7 @@ new class extends Component {
     </div>
     <div class="flex-col py-2 basis-1/2 mx-auto my-auto">
         <form class="px-6 my-auto flex-col space-x-4" wire:submit="store"> 
+            @csrf
             @if($this->habit->type === "NUMBER")
             <input type="number" wire:model.number="current_count" class="my-4 dark:bg-gray-800 dark:text-white" aria-label="Current Count" id="current_count" name="current_count" min="0"/>
             @elseif($this->habit->type === "CHECK")

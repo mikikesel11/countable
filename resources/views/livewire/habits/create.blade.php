@@ -28,6 +28,7 @@ new class extends Component {
 
 <div class="basis-1/4 mx-auto p-6 bg-white shadow-sm rounded-lg divide-y dark:bg-gray-700 dark:text-white">
     <form wire:submit="store"> 
+    @csrf
     <div class="flex flex-col">
         <div class="flex-col justify-between items-center mx-auto my-auto">
             <div class="flex-col py-2 basis-1/2 mx-auto my-auto">
