@@ -136,7 +136,7 @@ new class extends Component {
             <x-input-error :messages="$errors->get('final')" class="mx-2 dark:bg-gray-800 dark:text-white" />
             @endif
             <div class="flex space-x-4">
-                <x-primary-button class="btn bg-gray-200 text-black dark:bg-gray-800 dark:text-white">{{ __('Update') }}</x-primary-button>
+                <x-primary-button class="btn bg-gray-200 text-black bg-violet-200 dark:bg-violet-800 dark:text-white">{{ __('Update') }}</x-primary-button>
             </div>
             @env('local')
                 <p>{{print_r($errors)}}</p>

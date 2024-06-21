@@ -95,7 +95,7 @@ new class extends Component {
                                 <x-dropdown-link wire:click="edit({{ $habit->id }})">
                                     {{ __('Edit') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link href="habits/{{$habit->id}}/counts">History</x-dropdown-link>
+                                <x-dropdown-link href="{{route('counts', ['habit' => $habit->id])}}">History</x-dropdown-link>
                                 <x-dropdown-link wire:click="delete({{ $habit->id }})" wire:confirm="Are you sure to delete this habit?"> 
                                     {{ __('Delete') }}
                                 </x-dropdown-link> 

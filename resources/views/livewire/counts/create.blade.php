@@ -14,9 +14,6 @@ new class extends Component {
     #[Validate('required|date', message: "Tracked for Date required")]
     public $tracked_for_date;
 
-    #[Validate('required|int')]
-    public $streak;
-
     public $check;
     public $finalized;
 
@@ -24,7 +21,6 @@ new class extends Component {
     {
         $this->habit = $habit;
         $this->tracked_for_date = today()->format('Y-m-d');
-        $this->streak = $this->habit->current_streak;
     }
 
     public function store() 
@@ -81,7 +77,7 @@ new class extends Component {
             <x-input-error :messages="$errors->get('current_count')" class="my-2" />
             <input type="date" class="my-4 dark:bg-gray-800 dark:text-white" aria-label="Tracked For Date" wire:model="tracked_for_date" id="tracked_for_date" name="tracked_for_date" />
             <x-input-error :messages="$errors->get('tracked_for_date')" class="my-2" />
-            <x-primary-button type="submit" class="my-4 dark:bg-gray-800 dark:text-white" aria-label="Submit">Submit</x-primary-button>
+            <x-primary-button type="submit" class="my-4 bg-violet-200 dark:bg-violet-800 dark:text-white" aria-label="Submit">Submit</x-primary-button>
             @env('local')
             <p>{{print_r($errors)}}</p>
             @endenv

@@ -75,12 +75,12 @@ new class extends Component {
                 <x-input-error :messages="$errors->get('tracked_for_date')" class="mx-2 dark:bg-gray-800 dark:text-white" />
             </div>
             <div class="flex">
-                <input type="checkbox" wire:model.boolean="final" id="final" name="final" class="mt-1 checked:bg-violet-800 dark:bg-gray-800 dark:text-white" />
+                <input type="checkbox" wire:model.boolean="final" id="final" name="final" class="appearance-none mt-1 checked:bg-violet-800 dark:bg-gray-800 dark:text-white" />
                 <label for="final" class="px-2 dark:text-white">Finalize</label>
                 <p class="dark:text-white text-sm pt-1">This will complete the count for the Tracking for Date.</p>
             </div>
             <div class="flex space-x-4">
-                <x-primary-button class="btn dark:bg-gray-800 dark:text-white">{{ __('Update') }}</x-primary-button>
+                <x-primary-button class="btn bg-violet-200 dark:bg-violet-800 dark:text-white">{{ __('Update') }}</x-primary-button>
                 <x-secondary-button class="btn" wire:click.prevent="cancel">Cancel</x-secondary-button>
             </div>
         </form>

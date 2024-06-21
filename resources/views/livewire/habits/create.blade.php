@@ -40,16 +40,16 @@ new class extends Component {
             </div>
             <div class="flex-col py-2 basis-1/2 mx-auto my-auto">
                 <div class="basis-1/2 mx-auto my-auto">
-                    <input type="radio" class="dark:bg-gray-800" aria-label="Checkbox Count" id="CHECK" name="type" wire:model="type" value="Check" />
+                    <input type="radio" class="dark:bg-gray-800 checked:bg-violet-800" aria-label="Checkbox Count" id="CHECK" name="type" wire:model="type" value="Check" />
                     <label for="CHECK" class="mt-6">Checkbox style counts</label>
                 </div>
                 <div class="basis-1/2 mx-auto my-auto">
-                    <input type="radio" class="dark:bg-gray-800" aria-label="Numeric Count" id="NUMBER" name="type" wire:model="type" value="Number" />
+                    <input type="radio" class="dark:bg-gray-800 checked:bg-violet-800" aria-label="Numeric Count" id="NUMBER" name="type" wire:model="type" value="Number" />
                     <label for="NUMBER" class="mt-6">Numeric style counts</label>
                 </div>
                 <x-input-error :messages="$errors->get('type')" class="mt-2" />
             </div>
-            <x-primary-button class="py-2 mt-4 dark:bg-gray-800 dark:text-white" aria-label="Submit">Submit</x-primary-button> 
+            <x-primary-button class="py-2 mt-4 bg-violet-200 dark:bg-violet-800 dark:text-white" aria-label="Submit">Submit</x-primary-button> 
         </div>
     </div>
     @env('local')
