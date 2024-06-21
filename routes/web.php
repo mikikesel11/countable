@@ -4,8 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CountController;
 use App\Http\Controllers\HabitController;
 
-Route::view('/', 'welcome');
-
 Route::get('habits/{habit}/counts', [CountController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('counts');
@@ -23,3 +21,5 @@ Route::view('profile', 'profile')
     ->name('profile');
 
 require __DIR__.'/auth.php';
+
+Route::redirect('/', 'register');
