@@ -62,15 +62,18 @@ new class extends Component {
 }; ?>
 
 <div class="my-6 bg-white shadow-sm rounded-lg divide-y dark:bg-gray-700 dark:text-white">
-    <div class="flex-col py-2 basis-1/2 mx-auto my-auto">
+    <div class="flex flex-col basis-1/2 mx-auto my-auto">
         <form class="flex flex-col space-y-2" wire:submit="update" wire:key="{{$count->id}}">
             @csrf
+            <div class="flex flex-col">
+                <h3 class="basis-1/2 text-lg ">Edit Count:</h3>
+            </div>
             <div class="flex">
                 @if($this->habit->type === 'NUMBER')
-                <input type="number" wire:model.number="current_count" class="mx-4 py-auto dark:bg-gray-800 dark:text-white" aria-label="Current Count" id="current_count" name="current_count"/>
+                <input type="number" wire:model.number="current_count" class="dark:bg-gray-800 dark:text-white" aria-label="Current Count" id="current_count" name="current_count"/>
                 @elseIf($this->habit->type === 'CHECK')
                 <input type="checkbox" id="check" name="check" wire:model.boolean="check" class="appearance-none mt-1 checked:bg-violet-800 dark:bg-gray-800 dark:text-white" />
-                <label for="check" class="px-2 dark:text-white">Complete</label>
+                <label for="check" class="dark:text-white px-2">Complete</label>
                 @endif
                 <x-input-error :messages="$errors->get('current_count')" class="mx-2 dark:bg-gray-800 dark:text-white" />
             </div>
@@ -81,7 +84,7 @@ new class extends Component {
             <div class="flex">
                 <input type="checkbox" wire:model.boolean="final" id="final" name="final" class="appearance-none mt-1 checked:bg-violet-800 dark:bg-gray-800 dark:text-white" />
                 <label for="final" class="px-2 dark:text-white">Finalize</label>
-                <p class="dark:text-white text-sm pt-1">This will complete the count for the Tracking for Date.</p>
+                <p class="dark:text-white">This will complete the count for the Tracking for Date.</p>
             </div>
             <div class="flex space-x-4">
                 <x-primary-button class="btn bg-violet-200 dark:bg-violet-800 dark:text-white">{{ __('Update') }}</x-primary-button>

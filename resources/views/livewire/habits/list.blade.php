@@ -79,7 +79,7 @@ new class extends Component {
                     </div>
                     <div>
                         @if(!$editing && !$list)
-                            <button class="btn btn-lg text-gray-800" wire:click="listCount({{$habit->id}})">Count</button>
+                            <button class="btn btn-lg text-violet-800 dark:text-violet-300" wire:click="listCount({{$habit->id}})">Count</button>
                         @endif
                     </div>
                     <div>
