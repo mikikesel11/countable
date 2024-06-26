@@ -126,14 +126,14 @@ new class extends Component {
     } 
 }; ?>
 
-<div class="my-6 bg-white shadow-sm rounded-lg divide-y dark:bg-gray-700 dark:text-white">
+<div class="my-2 bg-white shadow-sm rounded-lg divide-y dark:bg-gray-700 dark:text-white">
     <div class="flex flex-col">
         @if(!$count->is($this->editing))
         <div class="flex flex-col space-y-2">
                 <span class="text-gray-800 dark:text-gray-200">Latest Count: {{$count->current_count}}</span>
                 <span class="text-gray-800 dark:text-gray-200">Tracked for: {{$count->tracked_for_date}}</span>
         </div>
-        <div>
+        <div class="flex mt-2">
             <x-secondary-button wire:click="edit({{ $count->id }})">
                 Edit Count
             </x-secondary-button>

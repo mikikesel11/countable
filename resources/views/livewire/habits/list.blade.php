@@ -53,34 +53,34 @@ new class extends Component {
 
 <div class="mt-6 bg-white shadow-sm rounded-lg divide-y dark:bg-gray-700 dark:text-white">
     @foreach ($habits as $habit)
-        <div class="p-6 flex space-x-2" wire:key="{{ $habit->id }}">
-            <div class="flex-1">
-                <div class="flex justify-between items-center">
-                    <div class="flex">
+        <div class="p-6 flex sm:flex-col space-x-2" wire:key="{{ $habit->id }}">
+            <div class="flex-auto sm:flex-col">
+                <div class="flex-auto justify-between items-center">
+                    <div class="flex justify-between items-center">
                         <span class="text-gray-800 dark:text-gray-200">{{ $habit->name }}</span>
-                    </div>
-                    <div class="flex p-2">
-                        <livewire:counts.list-single :habit=$habit wire:key="$habit->id" />
+                        <div>
+                            <x-dropdown>
+                                <x-slot name="trigger">
+                                    <button>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                        </svg>
+                                    </button>
+                                </x-slot>
+                                <x-slot name="content">
+                                    <x-dropdown-link wire:click="edit({{ $habit->id }})">
+                                        {{ __('Edit') }}
+                                    </x-dropdown-link>
+                                    <x-dropdown-link href="{{route('counts', ['habit' => $habit->id])}}">History</x-dropdown-link>
+                                    <x-dropdown-link wire:click="delete({{ $habit->id }})" wire:confirm="Are you sure to delete this habit?"> 
+                                        {{ __('Delete') }}
+                                    </x-dropdown-link> 
+                                </x-slot>
+                            </x-dropdown>
+                        </div>
                     </div>
                     <div>
-                        <x-dropdown>
-                            <x-slot name="trigger">
-                                <button>
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
-                                    </svg>
-                                </button>
-                            </x-slot>
-                            <x-slot name="content">
-                                <x-dropdown-link wire:click="edit({{ $habit->id }})">
-                                    {{ __('Edit') }}
-                                </x-dropdown-link>
-                                <x-dropdown-link href="{{route('counts', ['habit' => $habit->id])}}">History</x-dropdown-link>
-                                <x-dropdown-link wire:click="delete({{ $habit->id }})" wire:confirm="Are you sure to delete this habit?"> 
-                                    {{ __('Delete') }}
-                                </x-dropdown-link> 
-                            </x-slot>
-                        </x-dropdown>
+                        <livewire:counts.list-single :habit=$habit wire:key="$habit->id" />
                     </div>
                 </div>
                 @if ($habit->is($editing)) 
