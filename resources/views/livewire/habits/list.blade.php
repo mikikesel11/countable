@@ -10,8 +10,6 @@ new class extends Component {
 
     public ?Habit $editing = null;
 
-    public ?Habit $list = null;
-
     public function mount(): void
     {
         $this->getHabits();
@@ -51,36 +49,18 @@ new class extends Component {
         $this->getHabits();
     } 
 
-    public function listCount(Habit $habit): void
-    {
-        $this->list = $habit;
-        $this->getHabits();
-    }
-
-    #[On('count-edit')]
-    public function hideCount(): void
-    {
-        $this->list = null;
-        $this->getHabits();
-    }
-
 }; ?>
 
 <div class="mt-6 bg-white shadow-sm rounded-lg divide-y dark:bg-gray-700 dark:text-white">
     @foreach ($habits as $habit)
         <div class="p-6 flex space-x-2" wire:key="{{ $habit->id }}">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-            </svg>
             <div class="flex-1">
                 <div class="flex justify-between items-center">
                     <div class="flex">
                         <span class="text-gray-800 dark:text-gray-200">{{ $habit->name }}</span>
                     </div>
-                    <div>
-                        @if(!$editing && !$list)
-                            <button class="btn btn-lg text-violet-800 dark:text-violet-300" wire:click="listCount({{$habit->id}})">Count</button>
-                        @endif
+                    <div class="flex p-2">
+                        <livewire:counts.list-single :habit=$habit wire:key="$habit->id" />
                     </div>
                     <div>
                         <x-dropdown>
@@ -103,12 +83,9 @@ new class extends Component {
                         </x-dropdown>
                     </div>
                 </div>
-                    @if ($habit->is($editing)) 
-                        <livewire:habits.edit :habit="$habit" :key="$habit->id" />
-                    @endif 
-                    @if ($list && $list->id === $habit->id) 
-                        <livewire:counts.list-single :habit=$habit wire:key="$habit->id" />
-                    @endif 
+                @if ($habit->is($editing)) 
+                    <livewire:habits.edit :habit="$habit" :key="$habit->id" />
+                @endif 
             </div>
         </div>
     @endforeach 
