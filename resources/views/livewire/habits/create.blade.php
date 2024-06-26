@@ -36,7 +36,7 @@ new class extends Component {
             </div>
             <div class="flex-col py-2 basis-1/2 mx-auto my-auto">
                 <label for="name" class=" ">Habit Name:</label>
-                <input wire:model="name" id="name" type="text" class="bg-white shadow-sm rounded-lg divide-y dark:bg-gray-700 dark:text-white" aria-label="Habit Name" placeholder="Habit Name" />
+                <input wire:model="name" id="name" type="text" class="bg-white shadow-sm rounded-lg divide-y dark:bg-gray-700 dark:text-white" aria-label="Habit Name" placeholder="Workout" />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
             <div class="flex-col py-2 basis-1/2 mx-auto my-auto">

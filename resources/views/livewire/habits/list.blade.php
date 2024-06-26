@@ -53,8 +53,8 @@ new class extends Component {
 
 <div class="mt-6 bg-white shadow-sm rounded-lg divide-y dark:bg-gray-700 dark:text-white">
     @foreach ($habits as $habit)
-        <div class="p-6 flex sm:flex-col space-x-2" wire:key="{{ $habit->id }}">
-            <div class="flex-auto sm:flex-col">
+        <div class="p-6 flex flex-col space-x-2 md:justify-between md:items-center" wire:key="{{ $habit->id }}">
+            <div class="flex-auto flex-col md:justify-between md:items-center">
                 <div class="flex-auto justify-between items-center">
                     <div class="flex justify-between items-center">
                         <span class="text-gray-800 dark:text-gray-200">{{ $habit->name }}</span>

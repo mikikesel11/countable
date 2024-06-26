@@ -134,7 +134,7 @@ new class extends Component {
                 <span class="text-gray-800 dark:text-gray-200">Tracked for: {{$count->tracked_for_date}}</span>
         </div>
         <div class="flex mt-2">
-            <x-secondary-button wire:click="edit({{ $count->id }})">
+            <x-secondary-button wire:click="edit({{ $count->id }})" class="dark:bg-violet-800 bg-violet-800 hover:bg-violet-600">
                 Edit Count
             </x-secondary-button>
         </div>
@@ -142,7 +142,7 @@ new class extends Component {
         @if ($count->is($editing))
         <form wire:submit="update">
         @csrf
-            <div class="flex flex-col space-y-0">
+            <div class="flex flex-col space-y-2 md:justify-between md:items-center">
                 <div>
                     @if($this->habit->type === 'NUMBER')
                     <input type="number" wire:model.number="current_count" class="py-auto dark:bg-gray-800 dark:text-white" aria-label="Current Count" id="current_count" name="current_count"/>
