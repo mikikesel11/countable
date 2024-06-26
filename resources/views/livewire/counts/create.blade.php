@@ -62,26 +62,35 @@ new class extends Component {
 
 }; ?>
 
-<div class="mt-6 bg-white shadow-sm rounded-lg divide-y dark:bg-gray-700 dark:text-white">
-    <div class="flex-col py-2 basis-1/2 mx-auto my-auto">
-        <h3 class="basis-1/2 text-lg mx-auto px-6">Create a New {{$habit->name}} Count:</h3>
+<div class="flex flex-col mt-6 bg-white shadow-sm md:justify-between md:items-center rounded-lg divide-y dark:bg-gray-700 dark:text-white">
+    <div class="flex py-2 mx-auto md:justify-between md:items-center my-auto">
+        <h3>Create a New {{$habit->name}} Count:</h3>
     </div>
-    <div class="flex-col py-2 basis-1/2 mx-auto my-auto">
-        <form class="px-6 my-auto flex-col space-x-4" wire:submit="store"> 
+    <div class="flex flex-col justify-between items-center space-y-2 mx-auto my-auto">
+        <form wire:submit="store"  class="flex flex-col justify-between items-center space-y-2 mx-auto my-auto"> 
             @csrf
             @if($this->habit->type === "NUMBER")
-            <input type="number" wire:model.number="current_count" class="my-4 dark:bg-gray-800 dark:text-white" aria-label="Current Count" id="current_count" name="current_count" min="0"/>
+            <div class="flex">
+                <input type="number" wire:model.number="current_count" class="dark:bg-gray-800 dark:text-white" aria-label="Current Count" id="current_count" name="current_count" min="0"/>
+                <x-input-error :messages="$errors->get('current_count')" class="my-2" />
+            </div>
             @elseif($this->habit->type === "CHECK")
-            <input type="checkbox" id="check" name="check" wire:model.boolean="check" wire.confirm="Are you sure you want to consider this Count Completed?" class="appearance-none mt-1 checked:bg-violet-800 dark:bg-gray-800 dark:text-white" />
-            <label for="check" class="dark:text-white">Completed for Today</label>
+            <div class="flex space-x-2">
+                <x-input-label for="check" class="dark:text-white">Completed for Today</x-input-label>
+                <input type="checkbox" id="check" name="check" wire:model.boolean="check" wire.confirm="Are you sure you want to consider this Count Completed?" class="appearance-none mt-1 checked:bg-violet-800 dark:bg-gray-800 dark:text-white" />
+                <x-input-error :messages="$errors->get('current_count')" class="my-2" />
+            </div>
             @endif
-            <x-input-error :messages="$errors->get('current_count')" class="my-2" />
-            <input type="date" class="my-4 dark:bg-gray-800 dark:text-white" aria-label="Tracked For Date" wire:model="tracked_for_date" id="tracked_for_date" name="tracked_for_date" />
+            <div class="flex">
+            <input type="date" class="dark:bg-gray-800 dark:text-white" aria-label="Tracked For Date" wire:model="tracked_for_date" id="tracked_for_date" name="tracked_for_date" />
             <x-input-error :messages="$errors->get('tracked_for_date')" class="my-2" />
-            <x-primary-button type="submit" class="my-4 bg-violet-200 dark:bg-violet-800 dark:text-white" aria-label="Submit">Submit</x-primary-button>
+            </div>
+            <div class="flex-auto flex-col justify-between items-center">
+                <x-primary-button type="submit" class="bg-violet-300 dark:bg-violet-800 dark:text-white" aria-label="Submit">Submit</x-primary-button>
             @env('local')
             <p>{{print_r($errors)}}</p>
             @endenv
+            </div>
         </form> 
     </div>
 </div>

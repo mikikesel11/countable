@@ -31,20 +31,20 @@ new class extends Component {
     @csrf
     <div class="flex flex-col">
         <div class="flex-col justify-between items-center mx-auto my-auto">
-            <div class="flex-col py-2 basis-1/2 mx-auto my-auto">
+            <div>
                 <h3 class="basis-1/2 text-lg ">Create a New Habit:</h3>
             </div>
-            <div class="flex-col py-2 basis-1/2 mx-auto my-auto">
-                <label for="name" class=" ">Habit Name:</label>
+            <div>
+                <x-input-label for="name">Habit Name:</x-input-label>
                 <input wire:model="name" id="name" type="text" class="bg-white shadow-sm rounded-lg divide-y dark:bg-gray-700 dark:text-white" aria-label="Habit Name" placeholder="Workout" />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
-            <div class="flex-col py-2 basis-1/2 mx-auto my-auto">
-                <div class="basis-1/2 mx-auto my-auto">
+            <div>
+                <div>
                     <input type="radio" class="dark:bg-gray-800 checked:bg-violet-800" aria-label="Checkbox Count" id="CHECK" name="type" wire:model="type" value="Check" />
                     <label for="CHECK" class="mt-6">Checkbox style counts</label>
                 </div>
-                <div class="basis-1/2 mx-auto my-auto">
+                <div>
                     <input type="radio" class="dark:bg-gray-800 checked:bg-violet-800" aria-label="Numeric Count" id="NUMBER" name="type" wire:model="type" value="Number" />
                     <label for="NUMBER" class="mt-6">Numeric style counts</label>
                 </div>
