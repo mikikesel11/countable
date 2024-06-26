@@ -130,7 +130,13 @@ new class extends Component {
     <div class="flex flex-col">
         @if(!$count->is($this->editing))
         <div class="flex flex-col space-y-2">
+            @if($habit->type === "CHECK" && $count->current_count === 1)
+                <span class="text-gray-800 dark:text-gray-200">Latest Count: Complete</span>
+            @elseif($habit->type === "CHECK" && $count->current_count === 0)
+                <span class="text-gray-800 dark:text-gray-200">Latest Count: Incomplete</span>
+            @elseif($habit->type === "NUMBER")
                 <span class="text-gray-800 dark:text-gray-200">Latest Count: {{$count->current_count}}</span>
+            @endif
                 <span class="text-gray-800 dark:text-gray-200">Tracked for: {{$count->tracked_for_date}}</span>
         </div>
         <div class="flex mt-2">
