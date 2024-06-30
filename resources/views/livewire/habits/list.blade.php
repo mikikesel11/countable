@@ -6,7 +6,7 @@ use App\Models\Habit;
 use Illuminate\Database\Eloquent\Collection;
 
 new class extends Component {
-    public Collection $habits;
+    public ?Collection $habits = null;
 
     public ?Habit $editing = null;
 
@@ -52,6 +52,11 @@ new class extends Component {
 }; ?>
 
 <div class="mt-6 bg-white shadow-sm rounded-lg divide-y dark:bg-gray-700 dark:text-white">
+    @if(count($habits) === 0) 
+        <div class="flex-auto p-6 justify-between items-center">
+            <h4 class="text-lg text-center">No Habits found. Please create one below!</h4>
+        </div>
+    @endif
     @foreach ($habits as $habit)
         <div class="p-6 flex flex-col space-x-2 md:justify-between md:items-center" wire:key="{{ $habit->id }}">
             <div class="flex-auto flex-col md:justify-between md:items-center">

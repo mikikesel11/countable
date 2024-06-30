@@ -145,7 +145,7 @@ new class extends Component {
             </x-secondary-button>
         </div>
         @endif
-        @if ($count->is($editing))
+        @if($count->is($editing))
         <form wire:submit="update">
         @csrf
             <div class="flex flex-col space-y-2 md:justify-between md:items-center">

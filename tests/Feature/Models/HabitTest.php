@@ -5,16 +5,33 @@ namespace Tests\Feature\Models;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\User;
+use Livewire\Volt\Volt;
 
 class HabitTest extends TestCase
 {
     /**
-     * A basic feature test example.
+     *  Feature test for the Habits List page
      */
-    public function test_example(): void
+    public function test_list(): void
     {
-        $response = $this->get('/');
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->view('habits');
 
-        $response->assertStatus(200);
+        $response->assertSee('No Habits found. Please create one below!');
+        $response->assertSee('Create a New Habit:');
     }
+
+    public function test_create(): void
+    {
+        $user = User::factory()->create();
+        Volt::actingAs($user)
+            ->test('habits.create')
+            ->assertSee('Create a New Habit:')
+            ->set('name', "Workout")
+            ->set('type', "CHECK")
+            ->call('store')
+            ->assertDispatched('habit-created');
+    }
+
 }
