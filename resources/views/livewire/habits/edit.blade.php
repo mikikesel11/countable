@@ -5,7 +5,7 @@ use Livewire\Attributes\Validate;
 use Livewire\Volt\Component;
 
 new class extends Component {
-    public Habit $habit;
+    public ?Habit $habit;
 
     #[Validate('required|string|max:255')]
     public string $name;
@@ -15,8 +15,9 @@ new class extends Component {
 
     public bool $active;
 
-    public function mount(): void
+    public function mount(Habit $habit): void
     {
+        $this->habit = $habit;
         $this->name = $this->habit->name;
         $this->type = $this->habit->type;
         $this->active = $this->habit->active;
@@ -28,6 +29,7 @@ new class extends Component {
  
         $validated = $this->validate();
         $validated['active'] = $this->active ? 1:0;
+        $validated['user_id'] = auth()->user()->id;
 
         $this->habit->updateOrFail($validated);
  
