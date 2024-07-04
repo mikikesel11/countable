@@ -10,12 +10,12 @@ new class extends Component {
 
     public ?Habit $editing = null;
 
+    #[On('habit-created')]
     public function mount(): void
     {
         $this->getHabits();
     }
 
-    #[On('habit-created')]
     public function getHabits(): void
     {
         $this->habits = Habit::where('user_id', auth()->user()->id)
@@ -85,7 +85,7 @@ new class extends Component {
                         </div>
                     </div>
                     <div>
-                        <livewire:counts.list-single :habit=$habit wire:key="$habit->id" />
+                        <livewire:counts.list-single :habit="$habit" wire:key="$habit->id" />
                     </div>
                 </div>
                 @if ($habit->is($editing)) 

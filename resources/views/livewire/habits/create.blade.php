@@ -18,7 +18,13 @@ new class extends Component {
         $validated = $this->validate();
         $validated['active'] = 1;
 
-        auth()->user()->habits()->create($validated); 
+        $newHabit = auth()->user()->habits()->create($validated); 
+        auth()->user()->counts()->create([
+            'habit_id' => $newHabit->id,
+            'habit_name' => $newHabit->name,
+            'current_count' => 0,
+            'tracked_for_date' => today(),
+        ]);
         $this->name = '';
         $this->type = null;      
         $this->dispatch('habit-created');
@@ -50,7 +56,7 @@ new class extends Component {
                 </div>
                 <x-input-error :messages="$errors->get('type')" class="mt-2" />
             </div>
-            <x-primary-button class="py-2 mt-4 bg-violet-200 dark:bg-violet-800 dark:text-white" aria-label="Submit">Submit</x-primary-button> 
+            <x-primary-button class="py-2 mt-4 bg-violet-600 dark:bg-violet-800 dark:text-white" aria-label="Submit">Submit</x-primary-button> 
         </div>
     </div>
     @env('local')

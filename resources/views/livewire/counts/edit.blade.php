@@ -87,7 +87,7 @@ new class extends Component {
                 <p class="dark:text-white">This will complete the count for the Tracking for Date.</p>
             </div>
             <div class="flex space-x-4">
-                <x-primary-button class="btn bg-violet-200 dark:bg-violet-800 dark:text-white">{{ __('Update') }}</x-primary-button>
+                <x-primary-button class="btn bg-violet-600 dark:bg-violet-800 dark:text-white">{{ __('Update') }}</x-primary-button>
                 <x-secondary-button class="btn" wire:click.prevent="cancel">Cancel</x-secondary-button>
             </div>
         </form>

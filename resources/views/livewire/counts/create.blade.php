@@ -86,7 +86,7 @@ new class extends Component {
             <x-input-error :messages="$errors->get('tracked_for_date')" class="my-2" />
             </div>
             <div class="flex-auto flex-col justify-between items-center">
-                <x-primary-button type="submit" class="bg-violet-300 dark:bg-violet-800 dark:text-white" aria-label="Submit">Submit</x-primary-button>
+                <x-primary-button type="submit" class="bg-violet-600 dark:bg-violet-800 dark:text-white" aria-label="Submit">Submit</x-primary-button>
             @env('local')
             <p>{{print_r($errors)}}</p>
             @endenv

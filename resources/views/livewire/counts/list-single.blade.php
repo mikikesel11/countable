@@ -23,6 +23,7 @@ new class extends Component {
     public $final = false;
     public $check = false;
     
+    #[On('$parent.habit-created')]
     public function mount(Habit $habit): void
     {
         $this->habit = $habit;
@@ -39,6 +40,7 @@ new class extends Component {
             ->where('habit_id', $this->habit->id)
             ->latest()
             ->first();
+        $newCount = null;
         if($lastCount && $lastCount->tracked_for_date === $today && $lastCount->finalized === null)
         {
             $this->count = $lastCount;
@@ -76,18 +78,19 @@ new class extends Component {
                 $this->final = true;
             }
             return;
-        } 
-        $newCount = auth()->user()->counts()->create([
-                'user_id' => $this->habit->user_id,
+        } elseif(!$lastCount) {
+            $newCount = auth()->user()->counts()->create([
+                // 'user_id' => $this->habit->user_id,
                 'habit_id' => $this->habit->id,
                 'habit_name' => $this->habit->name,
                 'tracked_for_date' => $this->tracked_for_date,
                 'current_count' => 0,
                 'finalized' => null,
             ]);
-        $this->count = $newCount;
-        $this->current_count = $newCount->current_count;
-        $this->tracked_for_date = $newCount->tracked_for_date;
+        }
+        $this->count = $lastCount ? $lastCount : $newCount;
+        $this->current_count = $lastCount ? $lastCount->current_count : 0;
+        $this->tracked_for_date = $lastCount ? $lastCount->tracked_for_date : today()->format('Y-m-d');
     }
 
     public function update(): void
@@ -140,7 +143,7 @@ new class extends Component {
                 <span class="text-gray-800 dark:text-gray-200">Tracked for: {{$count->tracked_for_date}}</span>
         </div>
         <div class="flex mt-2">
-            <x-secondary-button wire:click="edit({{ $count->id }})" class="dark:bg-violet-800 bg-violet-800 hover:bg-violet-600">
+            <x-secondary-button wire:click="edit({{ $count->id }})" class="bg-gray-300 hover:bg-violet-600 dark:bg-violet-800">
                 Edit Count
             </x-secondary-button>
         </div>
@@ -174,7 +177,7 @@ new class extends Component {
                 <x-input-error :messages="$errors->get('final')" class="mx-2 dark:bg-gray-800 dark:text-white" />
                 @endif
                 <div>
-                    <x-primary-button class="btn bg-gray-200 text-black bg-violet-200 dark:bg-violet-800 dark:text-white">{{ __('Update') }}</x-primary-button>
+                    <x-primary-button class="btn text-black bg-violet-800 dark:bg-violet-800 dark:text-white">{{ __('Update') }}</x-primary-button>
                 </div>
                 @env('local')
                     <p>{{print_r($errors)}}</p>
