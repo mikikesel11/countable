@@ -5,7 +5,7 @@ use Livewire\Attributes\Validate;
 use Livewire\Volt\Component;
 
 new class extends Component {
-    public ?Habit $habit;
+    public Habit $habit;
 
     #[Validate('required|string|max:255')]
     public string $name;
@@ -62,7 +62,7 @@ new class extends Component {
                     <label for="CHECK" class="mt-6">Checkbox style counts</label>
                 </div>
                 <div class="basis-1/2 mx-auto my-auto">
-                    <input type="radio" class="dark:bg-gray-800 checked:bg-violet-800" aria-label="Numeric Count" id="NUMBER" name="type" wire:model="type" value="Number" aria-disabled="disabled" disabled selected/>
+                    <input type="radio" class="dark:bg-gray-800 checked:bg-violet-800" aria-label="Numeric Count" id="NUMBER" name="type" wire:model="type" value="Number" aria-disabled="disabled" disabled checked />
                     <label for="NUMBER" class="mt-6">Numeric style counts</label>
                 </div>
                 <x-input-error :messages="$errors->get('type')" class="mt-2" />
@@ -70,11 +70,11 @@ new class extends Component {
             @elseif($this->type === "CHECK")
             <div class="flex-col py-2 basis-1/2 mx-auto my-auto">
                 <div class="basis-1/2 mx-auto my-auto">
-                    <input type="radio" class="dark:bg-gray-800 checked:bg-violet-800" aria-label="Checkbox Count" id="CHECK" name="type" wire:model="type" value="Check" aria-disabled="disabled" disabled checked />
+                    <input type="radio" class="dark:bg-gray-800 checked:bg-violet-800" aria-label="Checkbox Count" id="CHECK" name="type" wire:model="type" value="CHECK" aria-disabled="disabled" disabled checked />
                     <label for="CHECK" class="mt-6">Checkbox style counts</label>
                 </div>
                 <div class="basis-1/2 mx-auto my-auto">
-                    <input type="radio" class="dark:bg-gray-800 checked:bg-violet-800" aria-label="Numeric Count" id="NUMBER" name="type" wire:model="type" value="Number" aria-disabled="disabled" disabled />
+                    <input type="radio" class="dark:bg-gray-800 checked:bg-violet-800" aria-label="Numeric Count" id="NUMBER" name="type" wire:model="type" value="NUMBER" aria-disabled="disabled" disabled />
                     <label for="NUMBER" class="mt-6">Numeric style counts</label>
                 </div>
                 <x-input-error :messages="$errors->get('type')" class="mt-2" />
@@ -85,7 +85,7 @@ new class extends Component {
                 <label for="active" class="px-2 dark:text-white">Active</label>
                 <x-input-error :messages="$errors->get('active')" class="mt-2" />
             </div>
-            <x-primary-button class="py-2 mt-4 bg-violet-200 dark:bg-violet-800 dark:text-white" aria-label="Submit">Submit</x-primary-button> 
+            <x-primary-button class="py-2 mt-4 bg-violet-600 dark:bg-violet-800 dark:text-white" aria-label="Submit">Submit</x-primary-button> 
             <x-secondary-button class="btn" wire:click.prevent="cancel">Cancel</x-secondary-button>
         </div>
     </div>

@@ -6,16 +6,16 @@ use App\Models\Habit;
 use Illuminate\Database\Eloquent\Collection;
 
 new class extends Component {
-    public ?Collection $habits = null;
+    public Collection $habits;
 
     public ?Habit $editing = null;
 
-    #[On('habit-created')]
     public function mount(): void
     {
         $this->getHabits();
     }
 
+    #[On('habit-created')]
     public function getHabits(): void
     {
         $this->habits = Habit::where('user_id', auth()->user()->id)
@@ -84,9 +84,11 @@ new class extends Component {
                             </x-dropdown>
                         </div>
                     </div>
+                    @if(!$editing)
                     <div>
                         <livewire:counts.list-single :habit="$habit" wire:key="$habit->id" />
                     </div>
+                    @endif
                 </div>
                 @if ($habit->is($editing)) 
                     <livewire:habits.edit :habit="$habit" :key="$habit->id" />
