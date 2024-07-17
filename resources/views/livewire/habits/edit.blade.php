@@ -55,22 +55,22 @@ new class extends Component {
                 <input wire:model="name" id="name" type="text" class="bg-white shadow-sm rounded-lg divide-y dark:bg-gray-700 dark:text-white" aria-label="Habit Name" placeholder="Habit Name" />
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
-            @if($this->type === "NUMBER")
+            @if($type === "NUMBER")
             <div class="flex-col py-2 basis-1/2 mx-auto my-auto">
                 <div class="basis-1/2 mx-auto my-auto">
-                    <input type="radio" class="dark:bg-gray-800 checked:bg-violet-800" aria-label="Checkbox Count" id="CHECK" name="type" wire:model="type" value="Check" aria-disabled="disabled" disabled/>
+                    <input type="radio" class="dark:bg-gray-800 checked:bg-violet-800" aria-label="Checkbox Count" id="CHECK" name="type" wire:model="type" value="CHECK" aria-disabled="disabled" disabled/>
                     <label for="CHECK" class="mt-6">Checkbox style counts</label>
                 </div>
                 <div class="basis-1/2 mx-auto my-auto">
-                    <input type="radio" class="dark:bg-gray-800 checked:bg-violet-800" aria-label="Numeric Count" id="NUMBER" name="type" wire:model="type" value="Number" aria-disabled="disabled" disabled checked />
+                    <input type="radio" class="dark:bg-gray-800 checked:bg-violet-800" aria-label="Numeric Count" id="NUMBER" name="type" wire:model="type" value="NUMBER" aria-disabled="disabled" checked disabled/>
                     <label for="NUMBER" class="mt-6">Numeric style counts</label>
                 </div>
                 <x-input-error :messages="$errors->get('type')" class="mt-2" />
             </div>
-            @elseif($this->type === "CHECK")
+            @elseif($type === "CHECK")
             <div class="flex-col py-2 basis-1/2 mx-auto my-auto">
                 <div class="basis-1/2 mx-auto my-auto">
-                    <input type="radio" class="dark:bg-gray-800 checked:bg-violet-800" aria-label="Checkbox Count" id="CHECK" name="type" wire:model="type" value="CHECK" aria-disabled="disabled" disabled checked />
+                    <input type="radio" class="dark:bg-gray-800 checked:bg-violet-800" aria-label="Checkbox Count" id="CHECK" name="type" wire:model="type" value="CHECK" aria-disabled="disabled" checked disabled/>
                     <label for="CHECK" class="mt-6">Checkbox style counts</label>
                 </div>
                 <div class="basis-1/2 mx-auto my-auto">

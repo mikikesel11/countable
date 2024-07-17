@@ -82,9 +82,9 @@ new class extends Component {
                             </x-dropdown>
                         </div>
                     </div>
-                    @if(!$editing)
+                    @if(!$habit->is($editing))
                     <div>
-                        <livewire:counts.list-single :habit="$habit" wire:key="{{ now() }}" />
+                        <livewire:counts.list-single :habit="$habit" wire:key="{{ $habit->id . now() }}" />
                     </div>
                     @endif
                 </div>
