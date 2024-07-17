@@ -77,7 +77,7 @@ new class extends Component {
                 $this->final = true;
             }
             return;
-        } elseif(!$lastCount) {
+        } elseif(!$lastCount || $lastCount->tracked_for_date < $isYesterday) {
             $newCount = auth()->user()->counts()->create([
                 // 'user_id' => $this->habit->user_id,
                 'habit_id' => $this->habit->id,
@@ -87,9 +87,9 @@ new class extends Component {
                 'finalized' => null,
             ]);
         }
-        $this->count = $lastCount ? $lastCount : $newCount;
-        $this->current_count = $lastCount ? $lastCount->current_count : 0;
-        $this->tracked_for_date = $lastCount ? $lastCount->tracked_for_date : today()->format('Y-m-d');
+        $this->count = $newCount ? $newCount : $lastCount;
+        $this->current_count = $newCount ? 0 : $lastCount->current_count;
+        $this->tracked_for_date = $newCount ? today()->format('Y-m-d') : $lastCount->tracked_for_date;
     }
 
     public function update(): void
