@@ -17,7 +17,8 @@ class CountFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'current_count' => 0,
+            'tracked_for_date' => today(),
         ];
     }
 }

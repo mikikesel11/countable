@@ -13,7 +13,7 @@ class HabitPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return auth()->user($user)->login;
     }
 
     /**
@@ -21,7 +21,7 @@ class HabitPolicy
      */
     public function view(User $user, Habit $habit): bool
     {
-        //
+        return $habit->user->is($user);
     }
 
     /**
@@ -29,7 +29,7 @@ class HabitPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return auth()->user($user)->login;
     }
 
     /**

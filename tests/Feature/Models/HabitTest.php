@@ -58,8 +58,6 @@ class HabitTest extends TestCase
             'user_id' => $user->id, 
             'habit_id' => $habit->id, 
             'habit_name' => $habit->name,
-            'current_count' => 0,
-            'tracked_for_date' => today(),
         ]);
         Livewire::actingAs($user)
             ->test('counts.list', ['habit' => $habit])
