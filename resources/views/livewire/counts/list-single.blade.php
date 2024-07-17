@@ -142,9 +142,9 @@ new class extends Component {
                 <span class="text-gray-800 dark:text-gray-200">Tracked for: {{$count->tracked_for_date}}</span>
         </div>
         <div class="flex mt-2">
-            <x-secondary-button wire:click="edit({{ $count->id }})" class="text-white bg-violet-700 hover:bg-violet-500 dark:text-white dark:bg-violet-800 dark:hover:bg-violet-500">
+            <x-primary-button wire:click="edit({{ $count->id }})" class="btn text-white bg-violet-600 hover:bg-violet-500 dark:text-white dark:bg-violet-800 dark:hover:bg-violet-500">
                 Edit Count
-            </x-secondary-button>
+            </x-primary-button>
         </div>
         @endif
         @if($count->is($editing))
