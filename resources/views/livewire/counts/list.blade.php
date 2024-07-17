@@ -92,7 +92,7 @@ new class extends Component {
                     </div>
                     @if (!$this->editing && $count->user_id === auth()->user()->id)
                     <div class="flex mt-2">
-                        <x-primary-button wire:click="edit({{ $count->id }})" class="text-white bg-violet-600 hover:bg-violet-700 dark:bg-violet-800">
+                        <x-primary-button wire:click="edit({{ $count->id }})" class="text-white bg-violet-600 hover:bg-violet-700 dark:bg-violet-800 dark:text-white">
                             Edit Count
                         </x-primary-button>
                     </div>
