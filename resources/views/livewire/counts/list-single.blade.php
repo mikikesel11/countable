@@ -23,7 +23,6 @@ new class extends Component {
     public $final = false;
     public $check = false;
     
-    #[On('$parent.habit-created')]
     public function mount(Habit $habit): void
     {
         $this->habit = $habit;
@@ -143,7 +142,7 @@ new class extends Component {
                 <span class="text-gray-800 dark:text-gray-200">Tracked for: {{$count->tracked_for_date}}</span>
         </div>
         <div class="flex mt-2">
-            <x-secondary-button wire:click="edit({{ $count->id }})" class="bg-gray-300 hover:bg-violet-600 dark:bg-violet-800">
+            <x-secondary-button wire:click="edit({{ $count->id }})" class="btn text-white bg-violet-700 hover:bg-violet-500 dark:text-white dark:bg-violet-800 dark:hover:bg-violet-500">
                 Edit Count
             </x-secondary-button>
         </div>

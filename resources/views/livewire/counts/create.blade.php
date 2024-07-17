@@ -87,10 +87,10 @@ new class extends Component {
             </div>
             <div class="flex-auto flex-col justify-between items-center">
                 <x-primary-button type="submit" class="bg-violet-600 dark:bg-violet-800 dark:text-white" aria-label="Submit">Submit</x-primary-button>
+            </div>
             @env('local')
             <p>{{print_r($errors)}}</p>
             @endenv
-            </div>
         </form> 
     </div>
 </div>

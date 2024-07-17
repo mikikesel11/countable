@@ -43,9 +43,7 @@ new class extends Component {
     public function delete(Habit $habit): void
     {
         $this->authorize('delete', $habit);
- 
         $habit->delete();
- 
         $this->getHabits();
     } 
 
@@ -86,7 +84,7 @@ new class extends Component {
                     </div>
                     @if(!$editing)
                     <div>
-                        <livewire:counts.list-single :habit="$habit" wire:key="$habit->id" />
+                        <livewire:counts.list-single :habit="$habit" wire:key="{{ now() }}" />
                     </div>
                     @endif
                 </div>
