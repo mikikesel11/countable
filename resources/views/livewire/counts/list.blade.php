@@ -67,8 +67,12 @@ new class extends Component {
     </div>  
     @foreach($counts as $count) 
         <div class="p-6 flex space-x-2" wire:key="{{ $count->id }}">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600 -scale-x-100" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-violet-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M11 7L8 17" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16 7L13 17" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M18 10H7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M17 14H6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path opacity="0.5" d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" stroke-width="1.5"/>
             </svg>
             <div class="flex-auto flex-col">
                 <div class="flex-col justify-between items-center">
